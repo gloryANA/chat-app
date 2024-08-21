@@ -1,10 +1,10 @@
-// src/app/signup/page.tsx
-"use client";  // Add this to mark the component as a Client Component
+
+"use client";  
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { FormEvent } from "react"; // Ensure this import is correct
+import { FormEvent } from "react";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -14,8 +14,7 @@ export default function Signup() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // Assuming you have an API endpoint to handle signup
+  
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
@@ -23,21 +22,21 @@ export default function Signup() {
       },
       body: JSON.stringify({ email, password, name }),
     });
-
+  
+    const data = await res.json();  // Parse the response data
+  
     if (res.ok) {
-      // If signup is successful, automatically sign the user in
       await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
-
-      router.push("/"); // Redirect to the home page
+      router.push("/");
     } else {
-      // Handle error (you can show an error message to the user)
-      console.error("Signup failed");
+      console.error("Signup failed:", data.error);  // Display error message
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">

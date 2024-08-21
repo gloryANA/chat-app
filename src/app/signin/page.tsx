@@ -1,5 +1,5 @@
-// src/app/signin/page.tsx
-"use client";  // Add this to mark the component as a Client Component
+
+"use client"; 
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
