@@ -1,0 +1,81 @@
+/* src/app/chat/Chat.module.css */
+
+.chatPanel {
+  /* display: flex;
+  flex-direction: column; */
+  flex: 1; /* Ensures it takes up the remaining space */
+
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.chatHeader {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.messagesList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+
+.messageBubble {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 60%;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+.messageBubble.sent {
+  align-items: flex-end; /* Align messages sent by the user to the right */
+}
+
+.messageBubbleYou {
+  background-color: #007bff;
+  color: white;
+}
+
+.messageBubbleOther {
+  background-color: #e9e9eb;
+  color: black;
+  align-self: left;
+}
+
+.messageInput {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 20px;
+  flex: 1;
+}
+.messageBubble.received .messageContent {
+  background-color: #e5e5e5; /* Color for received messages */
+  color: black;
+}
+.sendButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.noChats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: gray;
+}
+
+.messageForm {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #eee;
+}

@@ -1,10 +1,13 @@
 // models/User.ts
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
+  username: { type: String, required: true },
   password: { type: String, required: true },
+  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Field to store friend IDs
+  // other fields
 });
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+export default User;

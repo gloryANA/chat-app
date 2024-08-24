@@ -1,23 +1,47 @@
-// const express = require('express');
-// const http = require('http');
-// const socketIo = require('socket.io');
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
+const { Server: SocketIOServer } = require('socket.io');
 
-// const app = express();
-// const server = http.createServer(app);
-// const io = socketIo(server);
+// Environment setup
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
+// Prepare Next.js application
+app.prepare().then(() => {
+  // Create HTTP server
+  const server = createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const { pathname } = parsedUrl;
 
-//   socket.on('chat message', (msg) => {
-//     io.emit('chat message', msg);
-//   });
+    if (pathname.startsWith('/api/')) {
+      // Let Next.js handle API routes
+      handle(req, res, parsedUrl);
+    } else {
+      // Default handler for other routes
+      handle(req, res, parsedUrl);
+    }
+  });
 
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-// });
+  // Initialize Socket.IO
+  const io = new SocketIOServer(server);
 
-// server.listen(3001, () => {
-//   console.log('listening on *:3001');
-// });
+  io.on('connection', (socket) => {
+    console.log('New connection:', socket.id);
+
+    socket.on('message', (msg) => {
+      io.emit('message', msg);
+    });
+
+    socket.on('disconnect', () => {
+      console.log('User disconnected:', socket.id);
+    });
+  });
+
+  // Start the server
+  server.listen(3000, (err) => {
+    if (err) throw err;
+    console.log('> Ready on http://localhost:3000');
+  });
+});

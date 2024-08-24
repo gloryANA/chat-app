@@ -22,12 +22,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   padding: 1rem;
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+  
 }
 
 @layer utilities {
@@ -35,3 +30,13 @@ body {
     text-wrap: balance;
   }
 }
+
+/* styles/globals.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling on the body */
+  font-family: Arial, sans-serif; /* Ensure consistent font family */
+}
+
