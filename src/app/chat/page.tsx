@@ -102,7 +102,7 @@ export default function ChatPage() {
     e.preventDefault();
     if (!session?.user || !selectedChat) return;
 
-    socket.emit('message', { content: message, sender: session.user.email, chatId: selectedChat });
+    socket.emit('message', { content: message, sender: session.user.username, receiver: selectedChat });
 
     try {
       await fetch('/api/chats/save', {
@@ -110,7 +110,7 @@ export default function ChatPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: message, sender: session.user.email, chatId: selectedChat }),
+        body: JSON.stringify({ content: message, sender: session.user.username, receiver: selectedChat }),
       });
     } catch (error) {
       console.error('Error saving message:', error);
@@ -141,7 +141,7 @@ export default function ChatPage() {
         if (result.friend) {
           setChats((prevChats) => [...prevChats, result.friend]);
           setFriendUsername('');
-          await fetchChats(); // Call the function to update chats
+          // await fetchChats(); // Call the function to update chats
         } else {
           alert(result.message || 'User not found or already added.');
         }
